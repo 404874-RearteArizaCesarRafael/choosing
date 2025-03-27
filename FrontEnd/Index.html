@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en" >
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +24,7 @@
                 <span id="accredited" class="badge bg-success">Acreditados: 0</span>
                 <span id="new" class="badge bg-primary">Nuevos: 0</span>
             </div>
-            <button type="button" class="btn btn-primary" onclick="searchByName()">Nuevo Invitado</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addGuestModal">Nuevo Invitado</button>
             <h1>Acreditación de Invitados</h1>
         </div>
     <!-- Lista de Invitados -->
@@ -64,9 +64,118 @@
             </div>
         </div>
     </div>
+ 
+    <!-- Add New Guest Modal -->
+<div class="modal fade" id="addGuestModal" tabindex="-1" aria-labelledby="addGuestModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addGuestModalLabel">Agregar Nuevo Invitado</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="addGuestForm">
+            <div class="mb-3">
+              <label for="newGuestDni" class="form-label">DNI</label>
+              <input type="number" class="form-control" id="newGuestDni" required>
+            </div>
+            <div class="mb-3">
+              <label for="newGuestNombre" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="newGuestNombre" required>
+            </div>
+            <div class="mb-3">
+              <label for="newGuestApellido" class="form-label">Apellido</label>
+              <input type="text" class="form-control" id="newGuestApellido" required>
+            </div>
+            <div class="mb-3">
+              <label for="newGuestEmail" class="form-label">Email</label>
+              <input type="email" class="form-control" id="newGuestEmail">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Días de Asistencia</label>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="newGuestDayOne">
+                <label class="form-check-label" for="newGuestDayOne">Jueves</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="newGuestDayTwo">
+                <label class="form-check-label" for="newGuestDayTwo">Viernes</label>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="newGuestInfoAdicional" class="form-label">Información Adicional</label>
+              <textarea class="form-control" id="newGuestInfoAdicional" rows="2"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="saveNewGuest()">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="editGuestModal" tabindex="-1" aria-labelledby="editGuestModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editGuestModalLabel">Editar Invitado</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="editGuestForm">
+            <input type="hidden" id="editGuestDniOriginal">
+            <div class="mb-3">
+              <label for="editGuestDni" class="form-label">DNI</label>
+              <input type="number" class="form-control" id="editGuestDni" required>
+            </div>
+            <div class="mb-3">
+              <label for="editGuestNombre" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="editGuestNombre" required>
+            </div>
+            <div class="mb-3">
+              <label for="editGuestApellido" class="form-label">Apellido</label>
+              <input type="text" class="form-control" id="editGuestApellido" required>
+            </div>
+            <div class="mb-3">
+              <label for="editGuestEmail" class="form-label">Email</label>
+              <input type="email" class="form-control" id="editGuestEmail">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Días de Asistencia</label>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="editGuestDayOne">
+                <label class="form-check-label" for="editGuestDayOne">Jueves</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="editGuestDayTwo">
+                <label class="form-check-label" for="editGuestDayTwo">Viernes</label>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="editGuestInfoAdicional" class="form-label">Información Adicional</label>
+              <textarea class="form-control" id="editGuestInfoAdicional" rows="2"></textarea>
+            </div>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="editGuestAcreditado">
+              <label class="form-check-label" for="editGuestAcreditado">Acreditado</label>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="saveEditedGuest()">Guardar Cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 </div>
+
+
+<!-- Agregar Bootstrap Icons para los iconos de edición -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -81,15 +190,23 @@
 // Inicializar DataTable
 let dataTable;
 
+// Actualizar cada 5 segundos
+const fetchInterval = 5000; 
+
+const startPolling = () => {
+  fetchGuests();
+  setInterval(fetchGuests, fetchInterval);
+}
+
 $(document).ready(function () {
     // Inicializar DataTable
     dataTable = $('#invitadosTable').DataTable({
         language: {
             url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json" // Español
         },
-        dom: "<'row'<'col-sm-6 d-flex justify-content-start'f><'col-sm-6 d-flex justify-content-end'l>>" + // Reubicar el buscador y selector de registros
-             "<'row'<'col-sm-12'tr>>" +           // Tabla
-             "<'row'<'col-sm-5'i><'col-sm-7'p>>", // Información y paginación
+        dom: "<'row'<'col-sm-6 d-flex justify-content-start'f><'col-sm-6 d-flex justify-content-end'l>>" +
+             "<'row'<'col-sm-12'tr>>" +
+             "<'row'<'col-sm-5'i><'col-sm-7'p>>",
         columns: [
             { data: 'dni' },
             { data: 'nombre' },
@@ -100,16 +217,28 @@ $(document).ready(function () {
             {
                 data: 'acreditado',
                 render: function (data) {
-                    return data ? '<span class="text-success">Acreditado</span>' : '<span class="text-danger">No ingreso</span>';
+                    // Verificar si el valor es mayor que 0 para considerarlo acreditado
+                    const isAccredited = data > 0;
+                    return isAccredited ? 
+                        '<span class="badge bg-success">Acreditadoo</span>' : 
+                        '<span class="badge bg-danger">No ingreso</span>';
                 }
             },
             {
                 data: null,
                 render: function (data) {
+                    // Verificar si el invitado está acreditado
+                    const isAccredited = data.acreditado > 0;
+                    const toggleClass = isAccredited ? 'btn-success' : 'btn-outline-success';
+                    const toggleText = isAccredited ? 'Acreditado' : 'Acreditar';
+                    
                     return `
                         <div class="d-flex gap-1">
-                            <button type="button" class="btn btn-primary btn-sm" onclick="accreditGuest('${data.dni}')">
-                                Acreditar
+                            <button type="button" class="btn ${toggleClass} btn-sm toggle-accredit" data-dni="${data.dni}" data-status="${isAccredited}">
+                                ${toggleText}
+                            </button>
+                            <button type="button" class="btn btn-primary btn-sm" onclick="openEditModal('${data.dni}')">
+                                <i class="bi bi-pencil"></i> Editar
                             </button>
                             <button type="button" class="btn btn-secondary btn-sm" onclick="printLabel('${data.nombre}', '${data.apellido}', '${data.dni}', '${data.mail}')">
                                 Etiqueta
@@ -122,9 +251,130 @@ $(document).ready(function () {
     });
 
     // Cargar los invitados al inicio
-    fetchGuests();
+    //fetchGuests();
+    startPolling(); // En lugar de fetchGuests();
+    
+    // Agregar evento para los botones de toggle acreditación
+    $('#invitadosTable').on('click', '.toggle-accredit', function() {
+        const dni = $(this).data('dni');
+        const currentStatus = $(this).data('status');
+        toggleAccreditStatus(dni, currentStatus);
+    });
 });
-    const apiUrl = "https://137.184.133.51:5002/api/List";
+
+// Función para abrir el modal de edición con los datos del invitado
+const openEditModal = async (dni) => {
+    try {
+        const response = await fetch(`${apiUrl}/searchByDni?dni=${dni}`);
+        if (!response.ok) throw new Error('No se encontró el invitado');
+        
+        const guest = await response.json();
+        
+        // Rellenar el formulario con los datos del invitado
+        document.getElementById('editGuestDniOriginal').value = guest.dni;
+        document.getElementById('editGuestDni').value = guest.dni;
+        document.getElementById('editGuestNombre').value = guest.nombre || '';
+        document.getElementById('editGuestApellido').value = guest.apellido || '';
+        document.getElementById('editGuestEmail').value = guest.mail || '';
+        document.getElementById('editGuestDayOne').checked = guest.dayOne === 'SI';
+        document.getElementById('editGuestDayTwo').checked = guest.dayTwo === 'SI';
+        document.getElementById('editGuestInfoAdicional').value = guest.infoAdicional || '';
+        document.getElementById('editGuestAcreditado').checked = guest.acreditado > 0;
+        
+        // Abrir el modal
+        $('#editGuestModal').modal('show');
+    } catch (error) {
+        console.error('Error al cargar los datos del invitado:', error);
+        alert('No se pudieron cargar los datos del invitado');
+    }
+};
+
+// Función para guardar los cambios del invitado editado
+const saveEditedGuest = async () => {
+    // Obtener el DNI original (por si cambió)
+    const originalDni = document.getElementById('editGuestDniOriginal').value;
+    
+    // Obtener los valores del formulario
+    const dni = document.getElementById('editGuestDni').value;
+    const nombre = document.getElementById('editGuestNombre').value;
+    const apellido = document.getElementById('editGuestApellido').value;
+    const email = document.getElementById('editGuestEmail').value;
+    const dayOne = document.getElementById('editGuestDayOne').checked ? 'SI' : 'NO';
+    const dayTwo = document.getElementById('editGuestDayTwo').checked ? 'SI' : 'NO';
+    const infoAdicional = document.getElementById('editGuestInfoAdicional').value;
+    const acreditado = document.getElementById('editGuestAcreditado').checked ? 1 : 0;
+    
+    // Validación básica
+    if (!dni || !nombre || !apellido) {
+        alert('Por favor complete los campos obligatorios: DNI, Nombre y Apellido');
+        return;
+    }
+    
+    // Crear objeto con los datos actualizados
+    const updatedGuest = {
+        dni: parseInt(dni),
+        nombre: nombre,
+        apellido: apellido,
+        mail: email,
+        dayOne: dayOne,
+        dayTwo: dayTwo,
+        infoAdicional: infoAdicional,
+        acreditado: acreditado
+    };
+    
+    try {
+        const response = await fetch(`${apiUrl}/update/${originalDni}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedGuest)
+        });
+        
+        if (response.ok) {
+            alert('Invitado actualizado con éxito');
+            $('#editGuestModal').modal('hide');
+            fetchGuests(); // Recargar lista de invitados
+        } else {
+            const errorText = await response.text();
+            alert(`Error al actualizar invitado: ${errorText}`);
+        }
+    } catch (error) {
+        console.error('Error al actualizar invitado:', error);
+        alert('Ha ocurrido un error al intentar actualizar el invitado');
+    }
+};
+
+// Función para cambiar el estado de acreditación (toggle)
+const toggleAccreditStatus = async (dni, currentStatus) => {
+    try {
+        // Convertir el estado actual a un valor booleano
+        const isCurrentlyAccredited = currentStatus === 'true' || currentStatus === true;
+        
+        // Llamar al endpoint con el nuevo estado (opuesto al actual)
+        const newStatus = isCurrentlyAccredited ? 0 : 1;
+        
+        const response = await fetch(`${apiUrl}/updateAccreditStatus/${dni}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ acreditado: newStatus })
+        });
+        
+        if (response.ok) {
+            // No mostrar alert para una mejor experiencia de usuario
+            fetchGuests(); // Recargar lista de invitados
+        } else {
+            const errorText = await response.text();
+            alert(`Error al cambiar estado de acreditación: ${errorText}`);
+        }
+    } catch (error) {
+        console.error('Error al cambiar estado de acreditación:', error);
+        alert('Ha ocurrido un error al intentar cambiar el estado de acreditación');
+    }
+};
+    const apiUrl = "https://choosing-rafa.duckdns.org/api/List";
 
     // Actualizar Contadores
     const updateCounters = (guests) => {
@@ -154,6 +404,52 @@ const fetchGuests = async () => {
         console.error('Error fetching guests:', error);
     }
 };
+
+const saveNewGuest = async () => {
+    const dni = document.getElementById("newGuestDni").value;
+    const nombre = document.getElementById("newGuestNombre").value;
+    const apellido = document.getElementById("newGuestApellido").value;
+    const email = document.getElementById("newGuestEmail").value;
+    const dayOne = document.getElementById("newGuestDayOne").checked ? "SI" : "NO";
+    const dayTwo = document.getElementById("newGuestDayTwo").checked ? "SI" : "NO";
+
+    if (!dni || !nombre || !apellido) {
+        alert("Por favor, complete los campos obligatorios: DNI, Nombre y Apellido.");
+        return;
+    }
+
+    const newGuest = {
+        dni: parseInt(dni),
+        nombre,
+        apellido,
+        mail: email,
+        dayOne,
+        dayTwo,
+        acreditado: 0
+    };
+
+    try {
+        const response = await fetch(`${apiUrl}/create`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(newGuest)
+        });
+
+        if (response.ok) {
+            alert("Invitado agregado con éxito.");
+            $("#addGuestModal").modal("hide");
+            document.getElementById("addGuestForm").reset();
+            fetchGuests();
+        } else {
+            const errorText = await response.text();
+            alert(`Error al crear invitado: ${errorText}`);
+        }
+    } catch (error) {
+        console.error("Error al crear invitado:", error);
+        alert("Hubo un error al intentar crear el invitado.");
+    }
+};
+
 
 const searchByName = async () => {
     const query = document.getElementById("searchName").value;

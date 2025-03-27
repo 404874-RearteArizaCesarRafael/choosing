@@ -63,10 +63,12 @@ app.UseCors("AllowAll"); // <- Agrega esto antes de UseAuthorization()
 
 
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapGet("/", () => "API Choosing está funcionando!");
 
 app.Run();

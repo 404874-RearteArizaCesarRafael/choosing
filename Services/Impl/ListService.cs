@@ -34,5 +34,46 @@ namespace choosing.Services.Impl
             return await _listRepository.SearchByNameAsync(query);
 
         }
+
+        public async Task<Guest> CreateInvitadoAsync(Guest newGuest)
+        {
+            return await _listRepository.AddAsync(newGuest);
+        }
+
+        public async Task UpdateInvitadoAsync(int originalDni, Guest updatedGuest)
+        {
+            // Obtener el invitado original
+            var invitado = await _listRepository.GetByDNIAsync(originalDni);
+            if (invitado == null)
+                throw new Exception($"No se encontró un invitado con el DNI {originalDni}");
+
+            // Si el DNI cambió, necesitamos eliminar el registro anterior y crear uno nuevo
+            if (originalDni != updatedGuest.Dni)
+            {
+                await _listRepository.DeleteAsync(originalDni);
+                await _listRepository.AddAsync(updatedGuest);
+            }
+            else
+            {
+                // Actualizar todos los campos
+                invitado.Nombre = updatedGuest.Nombre;
+                invitado.Apellido = updatedGuest.Apellido;
+                invitado.Mail = updatedGuest.Mail;
+                invitado.DayOne = updatedGuest.DayOne;
+                invitado.DayTwo = updatedGuest.DayTwo;
+                invitado.InfoAdicional = updatedGuest.InfoAdicional;
+                invitado.Acreditado = updatedGuest.Acreditado;
+                invitado.CantEntradas = updatedGuest.CantEntradas;
+
+                await _listRepository.UpdateAsync(invitado);
+            }
+        }
+
+        public async Task UpdateAccreditStatusAsync(Guest invitado)
+        {
+            await _listRepository.UpdateAsync(invitado);
+        }
+
+
     }
 }

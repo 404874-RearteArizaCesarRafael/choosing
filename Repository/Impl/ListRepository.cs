@@ -12,6 +12,8 @@ namespace choosing.Repository.Impl
         {
             _context = context;
         }
+
+
         public async Task<List<Guest>> GetAllAsync()
         {
             try
@@ -64,6 +66,37 @@ namespace choosing.Repository.Impl
             {
                 // Log the exception (use a logging framework)
                 throw new Exception("Error updating guest", ex);
+            }
+        }
+        public async Task<Guest> AddAsync(Guest guest)
+        {
+            try
+            {
+                await _context.Guests.AddAsync(guest);
+                await _context.SaveChangesAsync();
+                return guest;
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (use a logging framework)
+                throw new Exception("Error adding new guest", ex);
+            }
+        }
+        public async Task DeleteAsync(int dni)
+        {
+            try
+            {
+                var guest = await _context.Guests.FindAsync(dni);
+                if (guest != null)
+                {
+                    _context.Guests.Remove(guest);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (use a logging framework)
+                throw new Exception($"Error deleting guest with DNI {dni}", ex);
             }
         }
     }

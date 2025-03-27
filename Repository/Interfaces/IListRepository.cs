@@ -13,5 +13,9 @@ namespace choosing.Repository.Interfaces
 
         // Actualizar información del invitado (como acreditarlo)
         Task UpdateAsync(Guest guest);
+
+        Task<Guest> AddAsync(Guest guest); // New method
+
+        Task DeleteAsync(int dni); // Nuevo método
     }
 }

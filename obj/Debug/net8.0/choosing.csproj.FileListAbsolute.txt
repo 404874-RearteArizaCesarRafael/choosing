@@ -170,3 +170,4 @@ C:\Users\Rafa\Desktop\choosing\obj\Debug\net8.0\refint\choosing.dll
 C:\Users\Rafa\Desktop\choosing\obj\Debug\net8.0\choosing.pdb
 C:\Users\Rafa\Desktop\choosing\obj\Debug\net8.0\choosing.genruntimeconfig.cache
 C:\Users\Rafa\Desktop\choosing\obj\Debug\net8.0\ref\choosing.dll
+C:\Users\Rafa\Desktop\choosing\obj\Debug\net8.0\choosing.sourcelink.json
